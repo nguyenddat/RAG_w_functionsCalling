@@ -1,16 +1,20 @@
-from langchain.prompts import PromptTemplate
-
-from functions.phuong_thuc_xet_tuyen import phuong_thuc_xet_tuyen_rag
-from functions.chi_tieu_tuyen_sinh import chi_tieu_tuyen_sinh_rag
-from functions.quy_doi_chung_chi import quy_doi_chung_chi_rag
+from functions import (
+    chi_tieu_tuyen_sinh,
+    nganh_hoc,
+    phuong_thuc_xet_tuyen,
+    quy_doi_chung_chi,
+    diem_trung_tuyen,
+    thong_tin_truong
+)
 from core.models import get_chat_completion
 
-# print(phuong_thuc_xet_tuyen_rag.invoke(question = "Phương thức xét tuyển có sử dụng kết quả học tập THPT là gì?"))
-
 functions = {
-    "PhuongThucXetTuyen": phuong_thuc_xet_tuyen_rag,
-    "ChiTieuTuyenSinh": chi_tieu_tuyen_sinh_rag,
-    "QuyDoiChungChi": quy_doi_chung_chi_rag
+    "PhuongThucXetTuyen": phuong_thuc_xet_tuyen.phuong_thuc_xet_tuyen_rag,
+    "ChiTieuTuyenSinh": chi_tieu_tuyen_sinh.chi_tieu_tuyen_sinh_rag,
+    "QuyDoiChungChi": quy_doi_chung_chi.quy_doi_chung_chi_rag,
+    "NganhVaChuyenNganh": nganh_hoc.nganh_va_chuyen_nganh_rag,
+    "DiemTrungTuyen": diem_trung_tuyen.diem_trung_tuyen_rag,
+    "ThongTinTruong": thong_tin_truong.thong_tin_truong_rag
 }
 
 functions_description = "\n".join(
@@ -34,7 +38,7 @@ def functions_calling(question: str) -> str:
         print(f"Chọn function: {response}")
         return functions[response].invoke(question = question)
 
-print(functions_calling(question = "Quy đổi chứng chỉ IELTS 6.5"))
+print(functions_calling(question = "Cho tôi toàn bộ thông tin về trường"))
     
 
 

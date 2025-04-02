@@ -9,12 +9,18 @@ from core.models import embeddings
 from helpers.data_loader import data_loader
 
 class Retriever:
-    def __init__(self, data_path):
+    def __init__(self, data_path, data_level = "folder"):
         self.data_path = data_path
+        self.data_level = data_level
         self.build()
 
     def build(self):
-        texts = data_loader.load_folder(self.data_path)
+        if self.data_level == "folder":
+            texts = data_loader.load_folder(self.data_path)
+        
+        elif self.data_level == "multi_folders":
+            texts = data_loader.load_data(self.data_path)
+
         index = faiss.IndexFlatL2(1024)
 
         vector_store = FAISS(
